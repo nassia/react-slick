@@ -5,7 +5,7 @@ import assign from 'object-assign';
 import classnames from 'classnames';
 
 var getSlideClasses = (spec) => {
-  var slickActive, slickCenter, slickCloned;
+  var slickActive, slickCenter, slickCloned, slickActiveFirst, slickActiveLast;
   var centerOffset, index;
 
   if (spec.rtl) {
@@ -27,13 +27,18 @@ var getSlideClasses = (spec) => {
       slickActive = (index >= (spec.currentSlide - leftover) && index < spec.currentSlide + spec.slidesToShow) || index < spec.currentSlide - leftover + spec.slidesToShow - spec.slideCount;
     } else {
       slickActive = index >= Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow) && index < spec.currentSlide + spec.slidesToShow;
+      slickActiveFirst = index == Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow);
+      slickActiveLast = index == (spec.currentSlide + spec.slidesToShow - 1) || index == spec.slideCount - 1;
     }
   }
   return classnames({
     'slick-slide': true,
     'slick-active': slickActive,
     'slick-center': slickCenter,
-    'slick-cloned': slickCloned
+    'slick-cloned': slickCloned,
+    'slick-active-first': slickActiveFirst,
+    'slick-active-last': slickActiveLast,
+
   });
 };
 
