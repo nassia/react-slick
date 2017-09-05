@@ -28,7 +28,12 @@ var getSlideClasses = (spec) => {
     } else {
       slickActive = index >= Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow) && index < spec.currentSlide + spec.slidesToShow;
       slickActiveFirst = index == Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow);
-      slickActiveLast = index == (spec.currentSlide + spec.slidesToShow - 1) || index == spec.slideCount - 1;
+      if (spec.slideCount <= spec.slidesToShow) {
+        slickActiveFirst = index == 0;
+        slickActiveLast = index == spec.slideCount - 1;
+      } else {
+        slickActiveLast = index == Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow) + spec.slidesToShow - 1;
+      }
     }
   }
   return classnames({
