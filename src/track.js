@@ -151,8 +151,12 @@ var renderSlides = function (spec) {
 export class Track extends React.Component {
   render() {
     var slides = renderSlides.call(this, this.props);
+    var classNames = classnames({
+        'slick-track': true,
+        'slick-track-full': (this.props.slideCount >= this.props.slidesToShow),
+    });
     return (
-      <div className='slick-track' style={this.props.trackStyle}>
+      <div className={classNames} style={this.props.trackStyle}>
         { slides }
       </div>
     );
