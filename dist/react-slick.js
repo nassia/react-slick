@@ -2855,7 +2855,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else {
 	      slickActive = index >= Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow) && index < spec.currentSlide + spec.slidesToShow;
 	      slickActiveFirst = index == Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow);
-	      slickActiveLast = index == spec.currentSlide + spec.slidesToShow - 1 || index == spec.slideCount - 1;
+	      if (spec.slideCount <= spec.slidesToShow) {
+	        slickActiveFirst = index == 0;
+	        slickActiveLast = index == spec.slideCount - 1;
+	      } else {
+	        slickActiveLast = index == Math.min(spec.currentSlide, spec.slideCount - spec.slidesToShow) + spec.slidesToShow - 1;
+	      }
 	    }
 	  }
 	  return (0, _classnames2.default)({
@@ -2978,9 +2983,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  Track.prototype.render = function render() {
 	    var slides = renderSlides.call(this, this.props);
+	    var classNames = (0, _classnames2.default)({
+	      'slick-track': true,
+	      'slick-track-full': this.props.slideCount >= this.props.slidesToShow
+	    });
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'slick-track', style: this.props.trackStyle },
+	      { className: classNames, style: this.props.trackStyle },
 	      slides
 	    );
 	  };
